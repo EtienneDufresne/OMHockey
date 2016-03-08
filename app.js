@@ -1,12 +1,14 @@
 var async = require('async')
-var scraper = require('./lib/statsScraper')
-var csvUtils = require('./lib/csvUtils')
+var StatsScraper = require('./lib/statsScraper')
+var CsvUtils = require('./lib/csvUtils')
 var express = require('express')
 var app = express()
 
 app.get('/', function (req, res) {
+  var csvUtils = new CsvUtils()
   async.waterfall([
     function(callback) {
+      var scraper = new StatsScraper()
       scraper.getPlayerStatsAsJson(function(err, playerStats) {
         if(err) return callback(err)
         callback(null, playerStats)
