@@ -1,6 +1,6 @@
 var async = require('async')
 var should = require('should')
-var csvUtils = require('../lib/csvUtils')
+var CsvUtils = require('../lib/csvUtils')
 var fs = require('fs')
 
 describe('csvUtls', function() {
@@ -8,6 +8,7 @@ describe('csvUtls', function() {
   describe('jsonToCsv', function() {
     it('should return an err when invalid json is specifed', function(done) {
       var json = [{column1: 'r1c1', column2: 'r1c2'}, {column3: 'r2c1', column4: 'r2c2'}, ]
+      var csvUtils = new CsvUtils()
       csvUtils.jsonToCsv(json, function(err, csv) {
         should.exist(err)
         should.not.exist(csv)
@@ -19,6 +20,7 @@ describe('csvUtls', function() {
   describe('jsonToCsv', function() {
     it('should return a two column csv with 2 data rows', function(done) {
       var json = [{column1: 'r1c1', column2: 'r1c2'}, {column1: 'r2c1', column2: 'r2c2'}, ]
+      var csvUtils = new CsvUtils()
       csvUtils.jsonToCsv(json, function(err, csv) {
         should.not.exist(err)
         should.exist(csv)
@@ -33,6 +35,7 @@ describe('csvUtls', function() {
 
   describe('saveCsvToFile', function() {
     it('should return an error when an invalid path is specified', function(done) {
+      var csvUtils = new CsvUtils()
       csvUtils.saveCsvToFile("/invalid/path", "column1, column2\nr1c1,r1c2\nr2c1,r2c2",function(err) {
         should.exist(err)
         done()
@@ -46,6 +49,7 @@ describe('csvUtls', function() {
       var csvData = 'column1, column2\nr1c1,r1c2\nr2c1,r2c2'
       async.waterfall([
         function(callback) {
+          var csvUtils = new CsvUtils()
           csvUtils.saveCsvToFile(csvPath, csvData, function(err) {
             should.not.exist(err)
             callback(null)
