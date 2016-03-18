@@ -34,7 +34,7 @@ describe('statsScraper', function() {
   })
 
   describe('getPlayerStatsAsJson', function() {
-    it('should display player stats as json', function(done) {
+    it('should return player stats as json', function(done) {
       var scraper = new StatsScraper()
       scraper.getPlayerStatsAsJson(function(err, playerStats) {
         should.not.exist(err)
@@ -47,6 +47,45 @@ describe('statsScraper', function() {
         playerStats[0][StatsScraper.PLAYER_STATS_COLUMNS.goals].should.exist
         playerStats[0][StatsScraper.PLAYER_STATS_COLUMNS.assists].should.exist
         playerStats[0][StatsScraper.PLAYER_STATS_COLUMNS.penalties].should.exist
+        done()
+      })
+    })
+  })
+
+  describe('getGoalieStatsAsJson', function() {
+    it('should return golie stats as json', function(done) {
+      var scraper = new StatsScraper()
+      scraper.getGoalieStatsAsJson(function(err, goalieStats) {
+        should.not.exist(err)
+        should.exist(goalieStats)
+        goalieStats.should.be.type('object')
+        goalieStats[0].should.be.type('object')
+        goalieStats[0][StatsScraper.GOALIE_STATS_COLUMNS.playerName].should.exist
+        goalieStats[0][StatsScraper.GOALIE_STATS_COLUMNS.teamName].should.exist
+        goalieStats[0][StatsScraper.GOALIE_STATS_COLUMNS.gamesPlayed].should.exist
+        goalieStats[0][StatsScraper.GOALIE_STATS_COLUMNS.goalsAgainst].should.exist
+        goalieStats[0][StatsScraper.GOALIE_STATS_COLUMNS.shutouts].should.exist
+        goalieStats[0][StatsScraper.GOALIE_STATS_COLUMNS.penalties].should.exist
+        done()
+      })
+    })
+  })
+
+  describe('getStandingsStatsAsJson', function() {
+    it('should return standings stats as json', function(done) {
+      var scraper = new StatsScraper()
+      scraper.getStandingsStatsAsJson(function(err, standingsStats) {
+        should.not.exist(err)
+        should.exist(standingsStats)
+        standingsStats.should.be.type('object')
+        standingsStats[0].should.be.type('object')
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.teamName].should.exist
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.gamesPlayed].should.exist
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.wins].should.exist
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.losses].should.exist
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.ties].should.exist
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.goalsFor].should.exist
+        standingsStats[0][StatsScraper.STANDINGS_STATS_COLUMNS.goalsAgainst].should.exist
         done()
       })
     })
